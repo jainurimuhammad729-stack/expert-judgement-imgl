@@ -1,0 +1,1951 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Expert Judgement – Instrumen IMGL Statistik Pendidikan</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+<style>
+  :root {
+    --navy: #0d2340;
+    --gold: #c8922a;
+    --gold-light: #f0c060;
+    --cream: #fdf8f0;
+    --white: #ffffff;
+    --gray-100: #f5f5f0;
+    --gray-200: #e8e4dc;
+    --gray-400: #9a9080;
+    --gray-700: #4a4540;
+    --text: #1a1510;
+    --accent: #1e4d8c;
+    --success: #2a7a4b;
+    --danger: #c0392b;
+    --warning: #d4850a;
+    --radius: 4px;
+    --shadow: 0 2px 20px rgba(13,35,64,0.10);
+    --shadow-lg: 0 8px 40px rgba(13,35,64,0.18);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    min-height: 100vh;
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  /* ===== PAGE SYSTEM ===== */
+  .page { display: none; min-height: 100vh; }
+  .page.active { display: block; }
+
+  /* ===== TOP HEADER ===== */
+  .site-header {
+    background: var(--navy);
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+  }
+  .site-header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 12px 32px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .header-logos { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
+  .logo-circle {
+    width: 58px; height: 58px;
+    border-radius: 50%;
+    background: var(--white);
+    display: flex; align-items: center; justify-content: center;
+    border: 2px solid var(--gold);
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .logo-circle img { width: 100%; height: 100%; object-fit: contain; }
+  .logo-placeholder {
+    width: 44px; height: 44px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 2px;
+  }
+  .logo-placeholder .lp-top {
+    font-size: 9px; font-weight: 700; color: var(--navy); text-align: center; line-height: 1.1;
+  }
+  .logo-placeholder .lp-seal {
+    width: 28px; height: 28px;
+    border: 2px solid var(--gold);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; color: var(--gold); font-weight: 700;
+  }
+  .logo-divider { width: 1px; height: 40px; background: rgba(255,255,255,0.2); }
+  .header-text { flex: 1; }
+  .header-inst {
+    font-size: 11px; color: var(--gold-light); letter-spacing: 1.5px; text-transform: uppercase;
+    font-weight: 600; line-height: 1.2;
+  }
+  .header-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px; font-weight: 700;
+    color: var(--white); line-height: 1.3;
+    margin-top: 2px;
+  }
+  .header-sub { font-size: 12px; color: rgba(255,255,255,0.6); margin-top: 2px; }
+
+  /* ===== LANDING PAGE ===== */
+  #page-landing {
+    background: linear-gradient(160deg, var(--navy) 0%, #1e3a6e 50%, #0a1a32 100%);
+    position: relative; overflow: hidden;
+  }
+  #page-landing::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c8922a' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  #page-landing .site-header { position: static; background: rgba(13,35,64,0.5); backdrop-filter: blur(10px); }
+
+  .landing-body {
+    max-width: 960px; margin: 0 auto;
+    padding: 60px 32px 80px;
+    position: relative; z-index: 1;
+  }
+  .landing-hero {
+    text-align: center; margin-bottom: 56px;
+  }
+  .landing-badge {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--navy);
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase;
+    padding: 6px 18px; border-radius: 20px;
+    margin-bottom: 24px;
+  }
+  .landing-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 900; color: var(--white);
+    line-height: 1.15; margin-bottom: 16px;
+  }
+  .landing-title span { color: var(--gold); }
+  .landing-subtitle {
+    font-size: 17px; color: rgba(255,255,255,0.75);
+    max-width: 640px; margin: 0 auto 40px;
+  }
+  .btn-start {
+    display: inline-flex; align-items: center; gap: 12px;
+    background: var(--gold);
+    color: var(--navy);
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 16px; font-weight: 700;
+    padding: 16px 42px; border-radius: 40px;
+    border: none; cursor: pointer;
+    letter-spacing: 0.5px;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 24px rgba(200,146,42,0.4);
+  }
+  .btn-start:hover {
+    background: var(--gold-light);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(200,146,42,0.5);
+  }
+  .btn-start svg { width: 20px; height: 20px; }
+
+  .landing-cards {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px; margin-bottom: 48px;
+  }
+  .lcard {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(200,146,42,0.25);
+    border-radius: 12px; padding: 28px 24px;
+    backdrop-filter: blur(8px);
+    transition: all 0.2s;
+  }
+  .lcard:hover { background: rgba(255,255,255,0.11); border-color: var(--gold); }
+  .lcard-icon {
+    width: 44px; height: 44px;
+    background: rgba(200,146,42,0.2);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 14px; font-size: 20px;
+  }
+  .lcard h3 { font-size: 15px; font-weight: 700; color: var(--white); margin-bottom: 6px; }
+  .lcard p { font-size: 13px; color: rgba(255,255,255,0.6); line-height: 1.5; }
+
+  .landing-info {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 12px; padding: 32px 36px;
+    backdrop-filter: blur(8px);
+  }
+  .landing-info h2 {
+    font-family: 'Playfair Display', serif;
+    color: var(--gold); font-size: 20px; margin-bottom: 20px;
+    padding-bottom: 12px; border-bottom: 1px solid rgba(200,146,42,0.3);
+  }
+  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  @media (max-width: 640px) { .info-grid { grid-template-columns: 1fr; } }
+  .info-section h4 { font-size: 13px; font-weight: 700; color: var(--gold-light); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; }
+  .info-section ul { list-style: none; }
+  .info-section li {
+    font-size: 13px; color: rgba(255,255,255,0.75);
+    padding: 5px 0; padding-left: 18px; position: relative;
+  }
+  .info-section li::before {
+    content: '›'; position: absolute; left: 0;
+    color: var(--gold); font-weight: 700;
+  }
+  .scale-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  .scale-table td {
+    padding: 6px 10px; font-size: 13px; color: rgba(255,255,255,0.75);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .scale-table td:first-child {
+    font-weight: 700; color: var(--gold);
+    width: 36px; text-align: center;
+  }
+
+  /* ===== LOGIN PAGE ===== */
+  #page-login {
+    background: var(--gray-100);
+    min-height: 100vh;
+  }
+  .login-body {
+    max-width: 720px; margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+  .login-card {
+    background: var(--white);
+    border-radius: 12px;
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+  }
+  .login-card-header {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--accent) 100%);
+    padding: 32px 40px;
+    text-align: center;
+  }
+  .login-card-header h2 {
+    font-family: 'Playfair Display', serif;
+    color: var(--white); font-size: 24px; margin-bottom: 6px;
+  }
+  .login-card-header p { color: rgba(255,255,255,0.7); font-size: 14px; }
+  .login-card-body { padding: 36px 40px; }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 580px) { .form-grid { grid-template-columns: 1fr; } .login-card-body { padding: 24px 20px; } }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-group.full { grid-column: 1 / -1; }
+  .form-group label {
+    font-size: 12px; font-weight: 600;
+    color: var(--gray-700); letter-spacing: 0.5px; text-transform: uppercase;
+  }
+  .form-group label span { color: var(--danger); }
+  .form-control {
+    width: 100%; padding: 11px 14px;
+    border: 1.5px solid var(--gray-200);
+    border-radius: var(--radius);
+    font-family: inherit; font-size: 14px;
+    color: var(--text); background: var(--white);
+    transition: border-color 0.2s;
+    outline: none;
+  }
+  .form-control:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(30,77,140,0.1); }
+  select.form-control { cursor: pointer; }
+  .btn-login {
+    width: 100%; padding: 14px;
+    background: var(--navy); color: var(--white);
+    font-family: inherit; font-size: 15px; font-weight: 700;
+    border: none; border-radius: var(--radius);
+    cursor: pointer; margin-top: 8px;
+    transition: all 0.2s;
+    letter-spacing: 0.5px;
+  }
+  .btn-login:hover { background: var(--accent); transform: translateY(-1px); }
+
+  /* ===== VALIDATION PAGE ===== */
+  #page-validation { background: var(--gray-100); }
+  .val-layout {
+    display: flex; min-height: calc(100vh - 72px);
+  }
+  .val-sidebar {
+    width: 260px; flex-shrink: 0;
+    background: var(--navy);
+    padding: 24px 0;
+    position: sticky; top: 72px;
+    height: calc(100vh - 72px);
+    overflow-y: auto;
+    scrollbar-width: thin;
+  }
+  .sidebar-section { margin-bottom: 8px; }
+  .sidebar-section-label {
+    font-size: 10px; font-weight: 700;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 2px; text-transform: uppercase;
+    padding: 10px 20px 4px;
+  }
+  .sidebar-btn {
+    width: 100%; text-align: left;
+    background: none; border: none;
+    color: rgba(255,255,255,0.65);
+    font-family: inherit; font-size: 13px;
+    padding: 10px 20px; cursor: pointer;
+    display: flex; align-items: center; gap: 10px;
+    transition: all 0.15s;
+    border-left: 3px solid transparent;
+  }
+  .sidebar-btn:hover { background: rgba(255,255,255,0.06); color: var(--white); }
+  .sidebar-btn.active {
+    background: rgba(200,146,42,0.15);
+    color: var(--gold);
+    border-left-color: var(--gold);
+    font-weight: 600;
+  }
+  .sidebar-btn .sb-icon { font-size: 16px; width: 20px; text-align: center; }
+  .sidebar-progress {
+    padding: 16px 20px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    margin-top: 16px;
+  }
+  .sp-label { font-size: 11px; color: rgba(255,255,255,0.4); margin-bottom: 8px; }
+  .sp-bar-wrap { background: rgba(255,255,255,0.1); border-radius: 4px; height: 6px; overflow: hidden; }
+  .sp-bar { height: 100%; background: var(--gold); border-radius: 4px; transition: width 0.4s ease; width: 0%; }
+  .sp-count { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 6px; text-align: right; }
+
+  .val-main {
+    flex: 1; padding: 32px;
+    overflow-y: auto;
+    max-width: calc(100% - 260px);
+  }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  .panel-header {
+    background: var(--white);
+    border-radius: 10px;
+    padding: 28px 32px; margin-bottom: 24px;
+    box-shadow: var(--shadow);
+    border-left: 5px solid var(--gold);
+  }
+  .panel-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; color: var(--navy); margin-bottom: 4px;
+  }
+  .panel-header p { font-size: 13px; color: var(--gray-400); }
+
+  /* Rating item */
+  .instrument-section {
+    background: var(--white);
+    border-radius: 10px; margin-bottom: 20px;
+    box-shadow: var(--shadow); overflow: hidden;
+  }
+  .section-header {
+    background: linear-gradient(90deg, var(--navy) 0%, var(--accent) 100%);
+    padding: 14px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    cursor: pointer; user-select: none;
+  }
+  .section-header h3 { font-size: 14px; font-weight: 700; color: var(--white); }
+  .section-header .sh-meta { font-size: 11px; color: rgba(255,255,255,0.6); }
+  .section-chevron { color: rgba(255,255,255,0.7); transition: transform 0.2s; font-size: 18px; }
+  .section-body { padding: 0; }
+  .section-body.collapsed { display: none; }
+
+  /* Item row */
+  .item-row {
+    padding: 18px 24px;
+    border-bottom: 1px solid var(--gray-100);
+    display: grid;
+    grid-template-columns: 36px 1fr auto;
+    gap: 16px;
+    align-items: start;
+    transition: background 0.15s;
+  }
+  .item-row:hover { background: var(--gray-100); }
+  .item-row:last-child { border-bottom: none; }
+  .item-num {
+    width: 28px; height: 28px;
+    background: var(--navy); color: var(--white);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; flex-shrink: 0; margin-top: 2px;
+  }
+  .item-content { flex: 1; }
+  .item-text { font-size: 13.5px; color: var(--text); line-height: 1.5; margin-bottom: 10px; }
+  .item-type-badge {
+    display: inline-block;
+    font-size: 10px; font-weight: 700;
+    padding: 2px 8px; border-radius: 10px;
+    margin-bottom: 8px; letter-spacing: 0.5px;
+  }
+  .badge-mc { background: #e3f0ff; color: #1e4d8c; }
+  .badge-sa { background: #e8f5e9; color: #2a7a4b; }
+  .badge-ps { background: #fff3e0; color: #d4850a; }
+
+  .rating-grid {
+    display: grid; gap: 10px;
+  }
+  .rating-row {
+    display: flex; align-items: center; gap: 10px;
+  }
+  .rating-label {
+    font-size: 11px; font-weight: 600; color: var(--gray-700);
+    width: 120px; flex-shrink: 0;
+    letter-spacing: 0.3px;
+  }
+  .stars { display: flex; gap: 4px; }
+  .star {
+    width: 30px; height: 30px;
+    border: 1.5px solid var(--gray-200);
+    border-radius: 4px;
+    background: var(--white);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 13px; font-weight: 700;
+    color: var(--gray-400);
+    transition: all 0.15s;
+    user-select: none;
+  }
+  .star:hover { border-color: var(--gold); background: rgba(200,146,42,0.1); color: var(--gold); }
+  .star.selected { background: var(--gold); border-color: var(--gold); color: var(--navy); }
+
+  .item-saran {
+    margin-top: 10px;
+  }
+  .saran-input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1.5px solid var(--gray-200);
+    border-radius: var(--radius);
+    font-family: inherit; font-size: 12px;
+    color: var(--text); resize: vertical; min-height: 56px;
+    transition: border-color 0.2s; outline: none;
+  }
+  .saran-input:focus { border-color: var(--accent); }
+
+  .decision-row {
+    display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap;
+  }
+  .decision-btn {
+    padding: 5px 14px;
+    border-radius: 20px;
+    border: 1.5px solid var(--gray-200);
+    background: var(--white);
+    font-size: 12px; font-weight: 600;
+    cursor: pointer; transition: all 0.15s;
+    color: var(--gray-700);
+  }
+  .decision-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .decision-btn.dr { border-color: var(--success); color: var(--success); }
+  .decision-btn.dr.sel { background: var(--success); color: var(--white); }
+  .decision-btn.r { border-color: var(--warning); color: var(--warning); }
+  .decision-btn.r.sel { background: var(--warning); color: var(--white); }
+  .decision-btn.t { border-color: var(--danger); color: var(--danger); }
+  .decision-btn.t.sel { background: var(--danger); color: var(--white); }
+
+  /* Construct validation */
+  .construct-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .construct-table th {
+    background: var(--navy); color: var(--white);
+    padding: 10px 14px; font-size: 12px; font-weight: 600;
+    text-align: left;
+  }
+  .construct-table td {
+    padding: 10px 14px; border-bottom: 1px solid var(--gray-100);
+    vertical-align: middle;
+  }
+  .construct-table tr:hover td { background: var(--gray-100); }
+  .construct-table td:first-child { font-weight: 500; color: var(--navy); }
+  .construct-rating { display: flex; gap: 6px; }
+  .cr-btn {
+    width: 32px; height: 32px;
+    border: 1.5px solid var(--gray-200);
+    border-radius: 4px; background: var(--white);
+    cursor: pointer; font-size: 12px; font-weight: 700;
+    color: var(--gray-400); transition: all 0.15s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .cr-btn:hover { border-color: var(--gold); color: var(--gold); }
+  .cr-btn.sel { background: var(--navy); border-color: var(--navy); color: var(--white); }
+  .cr-input {
+    flex: 1; padding: 7px 10px;
+    border: 1.5px solid var(--gray-200);
+    border-radius: var(--radius);
+    font-family: inherit; font-size: 12px;
+    outline: none;
+  }
+  .cr-input:focus { border-color: var(--accent); }
+
+  /* Summary panel */
+  .summary-card {
+    background: var(--white); border-radius: 10px;
+    box-shadow: var(--shadow); margin-bottom: 20px; overflow: hidden;
+  }
+  .summary-card-header {
+    background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 100%);
+    padding: 14px 24px;
+  }
+  .summary-card-header h3 { font-size: 15px; font-weight: 700; color: var(--navy); }
+  .summary-card-body { padding: 24px; }
+  .summary-stat-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 16px; margin-bottom: 24px;
+  }
+  .sstat {
+    text-align: center; padding: 16px 8px;
+    background: var(--gray-100); border-radius: 8px;
+  }
+  .sstat-val {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px; font-weight: 700; color: var(--navy);
+    line-height: 1;
+  }
+  .sstat-label { font-size: 11px; color: var(--gray-400); margin-top: 4px; }
+  .cvi-bar { background: var(--gray-200); border-radius: 4px; height: 10px; overflow: hidden; margin-top: 4px; }
+  .cvi-fill { height: 100%; background: linear-gradient(90deg, var(--gold), var(--success)); border-radius: 4px; transition: width 0.5s ease; }
+
+  /* Action buttons */
+  .action-bar {
+    display: flex; gap: 12px; flex-wrap: wrap;
+    background: var(--white); border-radius: 10px;
+    padding: 20px 24px; margin-bottom: 24px;
+    box-shadow: var(--shadow);
+    align-items: center; justify-content: space-between;
+  }
+  .action-bar-left { font-size: 13px; color: var(--gray-400); }
+  .action-bar-right { display: flex; gap: 10px; }
+  .btn {
+    padding: 10px 22px; border-radius: var(--radius);
+    font-family: inherit; font-size: 13px; font-weight: 600;
+    cursor: pointer; border: none; transition: all 0.2s;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-primary { background: var(--navy); color: var(--white); }
+  .btn-primary:hover { background: var(--accent); }
+  .btn-gold { background: var(--gold); color: var(--navy); }
+  .btn-gold:hover { background: var(--gold-light); }
+  .btn-outline {
+    background: var(--white); color: var(--navy);
+    border: 1.5px solid var(--navy);
+  }
+  .btn-outline:hover { background: var(--navy); color: var(--white); }
+  .btn-success { background: var(--success); color: var(--white); }
+  .btn-success:hover { opacity: 0.9; }
+
+  /* Toast */
+  .toast-wrap {
+    position: fixed; bottom: 24px; right: 24px;
+    z-index: 9999; display: flex; flex-direction: column; gap: 8px;
+  }
+  .toast {
+    background: var(--navy); color: var(--white);
+    padding: 12px 20px; border-radius: 8px;
+    font-size: 13px; font-weight: 500;
+    box-shadow: var(--shadow-lg);
+    display: flex; align-items: center; gap: 10px;
+    animation: slideIn 0.3s ease;
+    max-width: 320px;
+  }
+  .toast.success { border-left: 4px solid var(--success); }
+  .toast.error { border-left: 4px solid var(--danger); }
+  .toast.info { border-left: 4px solid var(--gold); }
+  @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+  /* Conclusion section */
+  .conclusion-box {
+    background: var(--white); border-radius: 10px;
+    box-shadow: var(--shadow); padding: 28px 32px;
+    margin-bottom: 20px;
+  }
+  .conclusion-box h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px; color: var(--navy); margin-bottom: 20px;
+  }
+  .conclusion-options { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
+  .conclusion-opt {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 16px; border-radius: 8px;
+    border: 1.5px solid var(--gray-200);
+    cursor: pointer; transition: all 0.15s;
+  }
+  .conclusion-opt:hover { border-color: var(--accent); background: var(--gray-100); }
+  .conclusion-opt input[type="radio"] { accent-color: var(--navy); width: 16px; height: 16px; }
+  .conclusion-opt label { cursor: pointer; font-size: 14px; }
+
+  .textarea-field {
+    width: 100%; padding: 12px 14px;
+    border: 1.5px solid var(--gray-200);
+    border-radius: var(--radius);
+    font-family: inherit; font-size: 13px;
+    min-height: 100px; resize: vertical; outline: none;
+    transition: border-color 0.2s;
+  }
+  .textarea-field:focus { border-color: var(--accent); }
+
+  /* Validator info bar */
+  .validator-bar {
+    background: linear-gradient(90deg, rgba(13,35,64,0.05), rgba(30,77,140,0.05));
+    border: 1px solid var(--gray-200);
+    border-radius: 8px; padding: 12px 20px;
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 24px; flex-wrap: wrap; gap: 10px;
+  }
+  .vbar-info { font-size: 13px; color: var(--navy); }
+  .vbar-info strong { font-weight: 700; }
+  .vbar-date { font-size: 12px; color: var(--gray-400); }
+
+  /* Mobile responsive */
+  @media (max-width: 768px) {
+    .val-sidebar { display: none; }
+    .val-main { max-width: 100%; padding: 16px; }
+    .item-row { grid-template-columns: 28px 1fr; }
+    .rating-label { width: 90px; font-size: 10px; }
+    .site-header-inner { padding: 10px 16px; gap: 12px; }
+    .header-title { font-size: 13px; }
+    .header-inst { font-size: 9px; }
+  }
+
+  /* Loading overlay */
+  .loading-overlay {
+    position: fixed; inset: 0; z-index: 9998;
+    background: rgba(13,35,64,0.85);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 16px;
+    backdrop-filter: blur(4px);
+  }
+  .loading-overlay.hidden { display: none; }
+  .spinner {
+    width: 48px; height: 48px;
+    border: 4px solid rgba(200,146,42,0.3);
+    border-top-color: var(--gold);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-text { color: var(--white); font-size: 14px; }
+
+  .form-divider {
+    grid-column: 1 / -1;
+    height: 1px; background: var(--gray-200);
+    margin: 4px 0;
+  }
+
+  .section-body-inner { padding: 4px 0; }
+</style>
+</head>
+<body>
+
+<!-- Loading Overlay -->
+<div class="loading-overlay hidden" id="loadingOverlay">
+  <div class="spinner"></div>
+  <div class="loading-text" id="loadingText">Memproses data...</div>
+</div>
+
+<!-- Toast Container -->
+<div class="toast-wrap" id="toastWrap"></div>
+
+<!-- ===================== PAGE: LANDING ===================== -->
+<div class="page active" id="page-landing">
+  <header class="site-header">
+    <div class="site-header-inner">
+      <div class="header-logos">
+        <div class="logo-circle" title="Universitas Jambi">
+          <div class="logo-placeholder">
+            <div class="lp-seal">UJ</div>
+            <div class="lp-top" style="color:#c8922a;font-size:8px">UNJA</div>
+          </div>
+        </div>
+        <div class="logo-divider"></div>
+        <div class="logo-circle" title="Universitas Merangin">
+          <div class="logo-placeholder">
+            <div class="lp-seal">UM</div>
+            <div class="lp-top" style="color:#c8922a;font-size:8px">UNMER</div>
+          </div>
+        </div>
+      </div>
+      <div class="header-text">
+        <div class="header-inst">Universitas Jambi · Universitas Merangin</div>
+        <div class="header-title">Expert Judgement – Instrumen Penelitian IMGL</div>
+        <div class="header-sub">Statistik Pendidikan · Program Doktor MIPA</div>
+      </div>
+    </div>
+  </header>
+
+  <div class="landing-body">
+    <div class="landing-hero">
+      <div class="landing-badge">📋 Validasi Instrumen Penelitian</div>
+      <h1 class="landing-title">
+        Lembar Validasi Ahli<br>
+        <span>Expert Judgement</span><br>
+        Instrumen Penelitian IMGL
+      </h1>
+      <p class="landing-subtitle">
+        Instrumen penelitian untuk mengukur <em>Student Engagement</em> dan <em>Retention</em>
+        dalam pembelajaran Statistik Pendidikan berbasis Model <strong>Integrated Micro-Gamified Learning (IMGL)</strong>
+      </p>
+      <button class="btn-start" onclick="showPage('login')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        MULAI VALIDASI
+      </button>
+    </div>
+
+    <div class="landing-cards">
+      <div class="lcard">
+        <div class="lcard-icon">📊</div>
+        <h3>SLEI</h3>
+        <p>Statistical Learning Engagement Instrument – 40 item, 4 dimensi engagement</p>
+      </div>
+      <div class="lcard">
+        <div class="lcard-icon">🎯</div>
+        <h3>SRAI</h3>
+        <p>Statistical Retention Assessment Instrument – 50 soal, 4 indikator retensi</p>
+      </div>
+      <div class="lcard">
+        <div class="lcard-icon">🗣️</div>
+        <h3>Wawancara</h3>
+        <p>Instrumen wawancara semi-terstruktur individual mahasiswa (27 pertanyaan)</p>
+      </div>
+      <div class="lcard">
+        <div class="lcard-icon">👥</div>
+        <h3>FGD</h3>
+        <p>Focus Group Discussion – 17 topik pertanyaan, 3 kelompok partisipan</p>
+      </div>
+    </div>
+
+    <div class="landing-info">
+      <h2>📌 Petunjuk Expert Judgement</h2>
+      <div class="info-grid">
+        <div class="info-section">
+          <h4>Tata Cara Penilaian</h4>
+          <ul>
+            <li>Baca setiap item instrumen dengan seksama</li>
+            <li>Berikan skor 1–4 pada setiap aspek penilaian</li>
+            <li>Isi kolom saran perbaikan bila diperlukan</li>
+            <li>Tentukan keputusan akhir (DR/R/T) untuk setiap item</li>
+            <li>Isi kesimpulan dan rekomendasi di akhir validasi</li>
+            <li>Klik "Simpan & Ekspor" untuk menyimpan hasil</li>
+          </ul>
+        </div>
+        <div class="info-section">
+          <h4>Skala Penilaian</h4>
+          <table class="scale-table">
+            <tr><td>4</td><td>Sangat Relevan / Sangat Sesuai / Sangat Jelas</td></tr>
+            <tr><td>3</td><td>Relevan / Sesuai / Jelas</td></tr>
+            <tr><td>2</td><td>Kurang Relevan / Kurang Sesuai / Kurang Jelas</td></tr>
+            <tr><td>1</td><td>Tidak Relevan / Tidak Sesuai / Tidak Jelas</td></tr>
+          </table>
+          <div style="margin-top:10px">
+            <h4>Keputusan Item</h4>
+            <ul>
+              <li><strong>DR</strong> – Dapat Digunakan tanpa Revisi</li>
+              <li><strong>R</strong> – Dapat Digunakan dengan Revisi</li>
+              <li><strong>T</strong> – Tidak Dapat Digunakan</li>
+            </ul>
+          </div>
+        </div>
+        <div class="info-section">
+          <h4>Target Kualitas (CVI/CVR)</h4>
+          <ul>
+            <li>CVI ≥ 0,80 → instrumen valid</li>
+            <li>Aiken's V ≥ 0,75 → item diterima</li>
+            <li>Aiken's V 0,60–0,74 → revisi item</li>
+            <li>Aiken's V &lt; 0,60 → item ditolak</li>
+            <li>CVR menggunakan formula Lawshe (1975)</li>
+          </ul>
+        </div>
+        <div class="info-section">
+          <h4>Alur Validasi</h4>
+          <ul>
+            <li>Isi identitas validator di form login</li>
+            <li>Validasi konstruk instrumen SLEI</li>
+            <li>Validasi item per dimensi SLEI (40 item)</li>
+            <li>Validasi kisi-kisi & item SRAI (50 soal)</li>
+            <li>Validasi instrumen Wawancara</li>
+            <li>Validasi instrumen FGD</li>
+            <li>Isi kesimpulan & ekspor PDF</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== PAGE: LOGIN ===================== -->
+<div class="page" id="page-login">
+  <header class="site-header">
+    <div class="site-header-inner">
+      <div class="header-logos">
+        <div class="logo-circle"><div class="logo-placeholder"><div class="lp-seal">UJ</div></div></div>
+        <div class="logo-divider"></div>
+        <div class="logo-circle"><div class="logo-placeholder"><div class="lp-seal">UM</div></div></div>
+      </div>
+      <div class="header-text">
+        <div class="header-inst">Expert Judgement – IMGL Statistik Pendidikan</div>
+        <div class="header-title">Identitas Validator</div>
+      </div>
+    </div>
+  </header>
+  <div class="login-body">
+    <div class="login-card">
+      <div class="login-card-header">
+        <h2>🔐 Form Identitas Validator</h2>
+        <p>Mohon isi data diri dengan lengkap dan benar sebelum memulai validasi</p>
+      </div>
+      <div class="login-card-body">
+        <div class="form-grid" id="loginForm">
+          <div class="form-group full">
+            <label>Nama Lengkap Validator / Expert <span>*</span></label>
+            <input type="text" class="form-control" id="v_nama" placeholder="Prof. Dr. ..." required>
+          </div>
+          <div class="form-group">
+            <label>NIP / NIDN / NIDK <span>*</span></label>
+            <input type="text" class="form-control" id="v_nip" placeholder="0000000000000000">
+          </div>
+          <div class="form-group">
+            <label>Jabatan Fungsional <span>*</span></label>
+            <select class="form-control" id="v_jabatan">
+              <option value="">-- Pilih --</option>
+              <option>Asisten Ahli</option>
+              <option>Lektor</option>
+              <option>Lektor Kepala</option>
+              <option>Guru Besar / Profesor</option>
+              <option>Dosen Luar Biasa</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Pendidikan Terakhir <span>*</span></label>
+            <select class="form-control" id="v_pendidikan">
+              <option value="">-- Pilih --</option>
+              <option>S2 (Magister)</option>
+              <option>S3 (Doktor)</option>
+              <option>Profesor</option>
+            </select>
+          </div>
+          <div class="form-group full">
+            <label>Bidang Keahlian <span>*</span></label>
+            <input type="text" class="form-control" id="v_keahlian" placeholder="mis. Statistika Pendidikan, Teknologi Pembelajaran, Psikologi Pendidikan">
+          </div>
+          <div class="form-group full">
+            <label>Instansi / Afiliasi <span>*</span></label>
+            <input type="text" class="form-control" id="v_instansi" placeholder="Nama Universitas / Lembaga">
+          </div>
+          <div class="form-group">
+            <label>Email <span>*</span></label>
+            <input type="email" class="form-control" id="v_email" placeholder="email@institusi.ac.id">
+          </div>
+          <div class="form-group">
+            <label>Tanggal Validasi <span>*</span></label>
+            <input type="date" class="form-control" id="v_tanggal">
+          </div>
+          <div class="form-group full">
+            <button class="btn-login" onclick="doLogin()">▶ MULAI VALIDASI</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:20px">
+      <a href="#" onclick="showPage('landing');return false" style="font-size:13px;color:var(--gray-400)">← Kembali ke Halaman Utama</a>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== PAGE: VALIDATION ===================== -->
+<div class="page" id="page-validation">
+  <header class="site-header">
+    <div class="site-header-inner">
+      <div class="header-logos">
+        <div class="logo-circle"><div class="logo-placeholder"><div class="lp-seal">UJ</div></div></div>
+        <div class="logo-divider"></div>
+        <div class="logo-circle"><div class="logo-placeholder"><div class="lp-seal">UM</div></div></div>
+      </div>
+      <div class="header-text">
+        <div class="header-inst">Expert Judgement – Model IMGL Statistik Pendidikan</div>
+        <div class="header-title">Validasi Instrumen Penelitian</div>
+        <div class="header-sub" id="headerValidatorName">Muhammad Jainuri (P3A524007) · Universitas Jambi</div>
+      </div>
+    </div>
+  </header>
+
+  <div class="val-layout">
+    <!-- Sidebar -->
+    <aside class="val-sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-section-label">Instrumen</div>
+        <button class="sidebar-btn active" onclick="switchTab('slei')" id="sb-slei">
+          <span class="sb-icon">📊</span> SLEI
+        </button>
+        <button class="sidebar-btn" onclick="switchTab('srai')" id="sb-srai">
+          <span class="sb-icon">🎯</span> SRAI
+        </button>
+        <button class="sidebar-btn" onclick="switchTab('wawancara')" id="sb-wawancara">
+          <span class="sb-icon">🗣️</span> Wawancara
+        </button>
+        <button class="sidebar-btn" onclick="switchTab('fgd')" id="sb-fgd">
+          <span class="sb-icon">👥</span> FGD
+        </button>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-section-label">Ringkasan</div>
+        <button class="sidebar-btn" onclick="switchTab('summary')" id="sb-summary">
+          <span class="sb-icon">📈</span> Rekap & Ekspor
+        </button>
+      </div>
+      <div class="sidebar-progress">
+        <div class="sp-label">Progress Pengisian</div>
+        <div class="sp-bar-wrap"><div class="sp-bar" id="progressBar"></div></div>
+        <div class="sp-count" id="progressCount">0 / 0 item dinilai</div>
+      </div>
+    </aside>
+
+    <!-- Main content -->
+    <main class="val-main">
+      <!-- Validator bar -->
+      <div class="validator-bar" id="validatorBar">
+        <div class="vbar-info">Validator: <strong id="vbarName">-</strong> | <span id="vbarInst">-</span></div>
+        <div class="vbar-date" id="vbarDate">-</div>
+      </div>
+
+      <!-- ===== TAB: SLEI ===== -->
+      <div class="tab-panel active" id="tab-slei">
+        <div class="panel-header">
+          <h2>📊 Statistical Learning Engagement Instrument (SLEI)</h2>
+          <p>40 item pernyataan · 4 dimensi · Skala Likert 5 poin · Adaptasi dari SEI, UWES-S, dan OSE</p>
+        </div>
+
+        <!-- SLEI Konstruk -->
+        <div class="instrument-section">
+          <div class="section-header" onclick="toggleSection(this)">
+            <h3>A. Validasi Konstruk – Kesesuaian Dimensi</h3>
+            <div style="display:flex;align-items:center;gap:12px">
+              <span class="sh-meta">4 dimensi</span>
+              <span class="section-chevron">▾</span>
+            </div>
+          </div>
+          <div class="section-body">
+            <div class="section-body-inner">
+              <div style="padding:16px 24px">
+                <table class="construct-table">
+                  <thead>
+                    <tr>
+                      <th>Dimensi</th>
+                      <th>Sangat Sesuai (4)</th>
+                      <th>Sesuai (3)</th>
+                      <th>Kurang Sesuai (2)</th>
+                      <th>Tidak Sesuai (1)</th>
+                      <th>Saran Perbaikan</th>
+                    </tr>
+                  </thead>
+                  <tbody id="slei-konstruk-body"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SLEI Items by Dimension -->
+        <div id="slei-items-container"></div>
+      </div>
+
+      <!-- ===== TAB: SRAI ===== -->
+      <div class="tab-panel" id="tab-srai">
+        <div class="panel-header">
+          <h2>🎯 Statistical Retention Assessment Instrument (SRAI)</h2>
+          <p>50 soal · 4 indikator · MC (8), Short Answer (22), Problem Solving/CT (20)</p>
+        </div>
+        <div id="srai-items-container"></div>
+      </div>
+
+      <!-- ===== TAB: Wawancara ===== -->
+      <div class="tab-panel" id="tab-wawancara">
+        <div class="panel-header">
+          <h2>🗣️ Instrumen Wawancara Semi-Terstruktur</h2>
+          <p>Wawancara individual mahasiswa · 27 pertanyaan · 8 sesi · Durasi ±60–90 menit</p>
+        </div>
+        <div id="wawancara-items-container"></div>
+      </div>
+
+      <!-- ===== TAB: FGD ===== -->
+      <div class="tab-panel" id="tab-fgd">
+        <div class="panel-header">
+          <h2>👥 Instrumen Focus Group Discussion (FGD)</h2>
+          <p>3 kelompok FGD · 17 topik pertanyaan · 5 tahap diskusi · Durasi ±90–120 menit</p>
+        </div>
+        <div id="fgd-items-container"></div>
+      </div>
+
+      <!-- ===== TAB: SUMMARY ===== -->
+      <div class="tab-panel" id="tab-summary">
+        <div class="panel-header">
+          <h2>📈 Rekapitulasi & Ekspor Hasil Validasi</h2>
+          <p>Ringkasan penilaian, CVI, dan rekomendasi validator</p>
+        </div>
+
+        <div class="summary-card">
+          <div class="summary-card-header"><h3>📊 Statistik Penilaian</h3></div>
+          <div class="summary-card-body" id="summaryStats"></div>
+        </div>
+
+        <div class="conclusion-box">
+          <h3>✅ Kesimpulan & Rekomendasi Validator</h3>
+          <div class="conclusion-options" id="conclusionOptions">
+            <label class="conclusion-opt"><input type="radio" name="conclusion" value="Layak digunakan tanpa revisi"> <label>Layak digunakan tanpa revisi</label></label>
+            <label class="conclusion-opt"><input type="radio" name="conclusion" value="Layak digunakan dengan revisi kecil"> <label>Layak digunakan dengan revisi kecil (minor revision)</label></label>
+            <label class="conclusion-opt"><input type="radio" name="conclusion" value="Layak digunakan dengan revisi besar"> <label>Layak digunakan dengan revisi besar (major revision)</label></label>
+            <label class="conclusion-opt"><input type="radio" name="conclusion" value="Tidak layak digunakan"> <label>Tidak layak digunakan, perlu penyusunan ulang</label></label>
+          </div>
+          <div style="display:grid;gap:14px">
+            <div>
+              <label style="font-size:12px;font-weight:700;color:var(--gray-700);letter-spacing:0.5px;text-transform:uppercase;display:block;margin-bottom:6px">Komentar Umum (Kekuatan Instrumen)</label>
+              <textarea class="textarea-field" id="concl_komentar" placeholder="Tuliskan kekuatan instrumen..."></textarea>
+            </div>
+            <div>
+              <label style="font-size:12px;font-weight:700;color:var(--gray-700);letter-spacing:0.5px;text-transform:uppercase;display:block;margin-bottom:6px">Saran Perbaikan Utama</label>
+              <textarea class="textarea-field" id="concl_saran" placeholder="Tuliskan saran perbaikan..."></textarea>
+            </div>
+            <div>
+              <label style="font-size:12px;font-weight:700;color:var(--gray-700);letter-spacing:0.5px;text-transform:uppercase;display:block;margin-bottom:6px">Pertanyaan/Item yang Perlu Ditambahkan</label>
+              <textarea class="textarea-field" id="concl_tambah" placeholder="Nomor item dan alasan..."></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="action-bar">
+          <div class="action-bar-left">Semua data akan tersimpan ke Google Sheets & diekspor PDF</div>
+          <div class="action-bar-right">
+            <button class="btn btn-outline" onclick="generatePreview()">👁 Preview PDF</button>
+            <button class="btn btn-gold" onclick="saveToSheets()">💾 Simpan ke Google Sheets</button>
+            <button class="btn btn-success" onclick="exportPDF()">📄 Ekspor PDF</button>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// DATA DEFINITIONS
+// ============================================================
+
+const VALIDATOR = {};
+
+const SLEI_DIMENSIONS = [
+  { id: 'behavioral', name: 'Behavioral Engagement', color: '#0d2340' },
+  { id: 'emotional', name: 'Emotional Engagement', color: '#1e4d8c' },
+  { id: 'cognitive', name: 'Cognitive Engagement', color: '#2a7a4b' },
+  { id: 'social', name: 'Social Engagement', color: '#c8922a' }
+];
+
+const SLEI_ITEMS = [
+  // BEHAVIORAL
+  { no: 1, dim: 'behavioral', sub: 'Partisipasi Aktif', text: 'Saya secara rutin mengakses platform IMGL untuk mempelajari materi Statistik Pendidikan.' },
+  { no: 2, dim: 'behavioral', sub: 'Partisipasi Aktif', text: 'Saya selalu hadir dan aktif mengikuti setiap sesi pembelajaran Statistik Pendidikan baik secara online maupun offline.' },
+  { no: 3, dim: 'behavioral', sub: 'Partisipasi Aktif', text: 'Saya antusias mengikuti berbagai aktivitas gamifikasi (challenges, quest, mini games) yang tersedia dalam platform IMGL.' },
+  { no: 4, dim: 'behavioral', sub: 'Usaha dan Persistensi', text: 'Saya konsisten menyelesaikan setiap micro-learning module Statistik Pendidikan yang diberikan.' },
+  { no: 5, dim: 'behavioral', sub: 'Usaha dan Persistensi', text: 'Ketika menghadapi kesulitan dalam memahami konsep statistik, saya terus mencoba hingga memahaminya.' },
+  { no: 6, dim: 'behavioral', sub: 'Usaha dan Persistensi', text: 'Saya berusaha mencapai level atau target yang lebih tinggi dalam sistem gamifikasi pembelajaran.' },
+  { no: 7, dim: 'behavioral', sub: 'Penyelesaian Tugas', text: 'Saya selalu mengumpulkan tugas-tugas Statistik Pendidikan tepat waktu sesuai deadline yang ditetapkan.' },
+  { no: 8, dim: 'behavioral', sub: 'Penyelesaian Tugas', text: 'Saya mengerjakan tugas dan latihan statistik dengan lengkap dan menyeluruh.' },
+  { no: 9, dim: 'behavioral', sub: 'Interaksi dengan Konten', text: 'Saya menonton video pembelajaran micro-learning hingga selesai untuk memahami materi statistik dengan baik.' },
+  { no: 10, dim: 'behavioral', sub: 'Interaksi dengan Konten', text: 'Saya memanfaatkan materi tambahan (e-book, artikel, video suplemen) yang tersedia dalam platform IMGL.' },
+  // EMOTIONAL
+  { no: 11, dim: 'emotional', sub: 'Minat dan Motivasi', text: 'Saya merasa tertarik dengan materi Statistik Pendidikan yang disajikan melalui platform IMGL.' },
+  { no: 12, dim: 'emotional', sub: 'Minat dan Motivasi', text: 'Saya memiliki motivasi dari dalam diri untuk mempelajari Statistik Pendidikan dengan sungguh-sungguh.' },
+  { no: 13, dim: 'emotional', sub: 'Minat dan Motivasi', text: 'Elemen gamifikasi (badges, points, leaderboard) membuat saya lebih termotivasi belajar Statistik Pendidikan.' },
+  { no: 14, dim: 'emotional', sub: 'Sikap Positif', text: 'Saya merasa senang dan enjoy saat belajar Statistik Pendidikan menggunakan model IMGL.' },
+  { no: 15, dim: 'emotional', sub: 'Sikap Positif', text: 'Saya merasa lebih percaya diri dalam menyelesaikan masalah-masalah statistik setelah menggunakan IMGL.' },
+  { no: 16, dim: 'emotional', sub: 'Sikap Positif', text: 'Saya merasa puas ketika berhasil mendapatkan achievement atau badges dalam pembelajaran statistik.' },
+  { no: 17, dim: 'emotional', sub: 'Sense of Belonging', text: 'Saya merasa menjadi bagian dari komunitas pembelajaran Statistik Pendidikan di platform IMGL.' },
+  { no: 18, dim: 'emotional', sub: 'Sense of Belonging', text: 'Saya merasa nyaman menggunakan platform IMGL untuk belajar Statistik Pendidikan.' },
+  { no: 19, dim: 'emotional', sub: 'Ketahanan Emosional', text: 'Saya mampu mengelola perasaan frustasi ketika menghadapi konsep statistik yang sulit dipahami.' },
+  { no: 20, dim: 'emotional', sub: 'Ketahanan Emosional', text: 'Saya tidak mudah menyerah meskipun gagal dalam menyelesaikan challenge atau kuis statistik pada percobaan pertama.' },
+  // COGNITIVE
+  { no: 21, dim: 'cognitive', sub: 'Deep Learning Strategies', text: 'Saya berusaha memahami konsep statistik secara mendalam, bukan hanya menghafal rumus.' },
+  { no: 22, dim: 'cognitive', sub: 'Deep Learning Strategies', text: 'Saya menghubungkan konsep-konsep statistik dengan situasi atau masalah nyata dalam pendidikan.' },
+  { no: 23, dim: 'cognitive', sub: 'Deep Learning Strategies', text: 'Saya melakukan refleksi terhadap proses pembelajaran saya untuk meningkatkan pemahaman statistik.' },
+  { no: 24, dim: 'cognitive', sub: 'Self-Regulation', text: 'Saya merencanakan jadwal belajar mandiri untuk menyelesaikan modul-modul IMGL secara teratur.' },
+  { no: 25, dim: 'cognitive', sub: 'Self-Regulation', text: 'Saya memantau progress pembelajaran saya melalui dashboard atau laporan yang tersedia di platform IMGL.' },
+  { no: 26, dim: 'cognitive', sub: 'Self-Regulation', text: 'Saya mengevaluasi pemahaman saya sendiri terhadap materi statistik dan mengidentifikasi bagian yang perlu dipelajari lebih lanjut.' },
+  { no: 27, dim: 'cognitive', sub: 'Critical Thinking', text: 'Saya menganalisis data statistik secara kritis dan tidak hanya menerima hasil perhitungan begitu saja.' },
+  { no: 28, dim: 'cognitive', sub: 'Critical Thinking', text: 'Saya membandingkan dan mengevaluasi berbagai metode statistik untuk menentukan yang paling sesuai dengan masalah yang dihadapi.' },
+  { no: 29, dim: 'cognitive', sub: 'Concentration', text: 'Saya dapat mempertahankan fokus dan konsentrasi saat mempelajari materi statistik di platform IMGL.' },
+  { no: 30, dim: 'cognitive', sub: 'Concentration', text: 'Saya sering mengalami "flow" (larut dalam aktivitas) ketika menyelesaikan tugas atau challenge statistik di IMGL.' },
+  // SOCIAL
+  { no: 31, dim: 'social', sub: 'Peer Interaction', text: 'Saya sering berinteraksi dengan teman-teman untuk mendiskusikan materi Statistik Pendidikan melalui forum atau fitur chat di platform IMGL.' },
+  { no: 32, dim: 'social', sub: 'Peer Interaction', text: 'Saya aktif berpartisipasi dalam diskusi online terkait konsep-konsep statistik yang sedang dipelajari.' },
+  { no: 33, dim: 'social', sub: 'Collaboration', text: 'Saya bekerja sama dengan baik dalam kelompok saat menyelesaikan tugas atau project statistik.' },
+  { no: 34, dim: 'social', sub: 'Collaboration', text: 'Saya memberikan kontribusi aktif dalam memecahkan masalah statistik secara kolaboratif dengan teman-teman.' },
+  { no: 35, dim: 'social', sub: 'Communication', text: 'Saya berkomunikasi dengan jelas ketika menjelaskan konsep atau hasil analisis statistik kepada teman atau dosen.' },
+  { no: 36, dim: 'social', sub: 'Communication', text: 'Saya responsif dan memberikan tanggapan ketika teman-teman meminta bantuan terkait materi statistik.' },
+  { no: 37, dim: 'social', sub: 'Communication', text: 'Saya berbagi strategi, tips, atau sumber belajar statistik dengan teman-teman di komunitas pembelajaran.' },
+  { no: 38, dim: 'social', sub: 'Sense of Community', text: 'Saya merasa terhubung secara sosial dengan teman-teman dalam komunitas pembelajaran Statistik Pendidikan.' },
+  { no: 39, dim: 'social', sub: 'Sense of Community', text: 'Saya mendapatkan dukungan sosial dari teman-teman ketika menghadapi kesulitan dalam belajar statistik.' },
+  { no: 40, dim: 'social', sub: 'Sense of Community', text: 'Saya merasa menjadi bagian penting dari komunitas pembelajaran yang saling mendukung dalam penguasaan statistik.' },
+];
+
+const SRAI_INDICATORS = [
+  {
+    id: 'ind1', name: 'Kemampuan Recall Konsep Statistik', range: '1–20',
+    items: [
+      { no: 1, jenis: 'MC', deskripsi: 'Distribusi probabilitas kontinu dengan bentuk simetris (distribusi normal)' },
+      { no: 2, jenis: 'MC', deskripsi: 'Jumlah seluruh probabilitas pada distribusi probabilitas diskrit' },
+      { no: 3, jenis: 'MC', deskripsi: 'Makna p-value kecil (< 0,05) dalam uji hipotesis' },
+      { no: 4, jenis: 'MC', deskripsi: 'Definisi Kesalahan Tipe I dalam pengujian hipotesis' },
+      { no: 5, jenis: 'MC', deskripsi: 'Makna koefisien b dalam persamaan regresi linier sederhana Y = a + bX' },
+      { no: 6, jenis: 'MC', deskripsi: 'Makna koefisien determinasi R²' },
+      { no: 7, jenis: 'MC', deskripsi: 'Interpretasi R² = 0,64' },
+      { no: 8, jenis: 'SA', deskripsi: 'Penjelasan konsep distribusi sampling dengan kata-kata sendiri' },
+      { no: 9, jenis: 'SA', deskripsi: 'Perbedaan uji satu arah (one-tailed) dan dua arah (two-tailed)' },
+      { no: 10, jenis: 'SA', deskripsi: 'Penjelasan asumsi linearitas dalam analisis regresi' },
+      { no: 11, jenis: 'SA', deskripsi: 'Recall rumus rata-rata (mean)' },
+      { no: 12, jenis: 'SA', deskripsi: 'Recall rumus standar deviasi sampel' },
+      { no: 13, jenis: 'SA', deskripsi: 'Recall rumus koefisien korelasi Pearson' },
+      { no: 14, jenis: 'SA', deskripsi: 'Recall rumus persamaan regresi linier sederhana' },
+      { no: 15, jenis: 'SA', deskripsi: 'Recall rumus interval kepercayaan 95% untuk rata-rata populasi' },
+      { no: 16, jenis: 'SA', deskripsi: 'Langkah-langkah uji-t untuk dua sampel independen (minimal 5 langkah)' },
+      { no: 17, jenis: 'SA', deskripsi: 'Prosedur pengujian normalitas data sebelum uji parametrik' },
+      { no: 18, jenis: 'SA', deskripsi: 'Langkah-langkah analisis regresi linier sederhana' },
+      { no: 19, jenis: 'SA', deskripsi: 'Prosedur menghitung dan menginterpretasi interval kepercayaan' },
+      { no: 20, jenis: 'SA', deskripsi: 'Aspek yang harus diperiksa sebelum menginterpretasi hasil korelasi' },
+    ]
+  },
+  {
+    id: 'ind2', name: 'Kemampuan Retrieval Prosedural', range: '21–30',
+    items: [
+      { no: 21, jenis: 'MC', deskripsi: 'Pemilihan uji statistik tepat untuk membandingkan tiga metode pembelajaran' },
+      { no: 22, jenis: 'PS', deskripsi: 'Perhitungan nilai t-statistik dua sampel independen (n=30 tiap kelompok, M_A=75 SD_A=8, M_B=70 SD_B=7)' },
+      { no: 23, jenis: 'PS', deskripsi: 'Langkah analisis korelasi: jam belajar vs. nilai ujian (10 siswa)' },
+      { no: 24, jenis: 'SA', deskripsi: 'Pemilihan uji yang tepat untuk data pre-test & post-test 25 siswa yang sama' },
+      { no: 25, jenis: 'PS', deskripsi: 'Perhitungan mean, median, dan standar deviasi dari data: 12, 15, 18, 20, 22, 25, 28, 30' },
+      { no: 26, jenis: 'PS', deskripsi: 'Uji signifikansi korelasi r=0,75, n=30, α=0,05' },
+      { no: 27, jenis: 'PS', deskripsi: 'Perhitungan interval kepercayaan 95% (n=25, x̄=80, s=10)' },
+      { no: 28, jenis: 'PS', deskripsi: 'Analisis lengkap uji-t berpasangan: hipotesis, perhitungan, keputusan, simpulan' },
+      { no: 29, jenis: 'PS', deskripsi: 'Analisis regresi lengkap dan interpretasi: persamaan, R², interpretasi' },
+      { no: 30, jenis: 'PS', deskripsi: 'Identifikasi dan koreksi kesalahan prosedur analisis statistik' },
+    ]
+  },
+  {
+    id: 'ind3', name: 'Pemahaman Konseptual Jangka Panjang', range: '31–40',
+    items: [
+      { no: 31, jenis: 'SA', deskripsi: 'Perbedaan konsep parameter dan statistik dengan kata-kata sendiri' },
+      { no: 32, jenis: 'SA', deskripsi: 'Penjelasan konsep distribusi sampling dengan bahasa yang mudah dipahami' },
+      { no: 33, jenis: 'SA', deskripsi: 'Alasan pentingnya uji signifikansi dalam penelitian' },
+      { no: 34, jenis: 'SA', deskripsi: 'Interpretasi hasil uji-t: t=2,45, p=0,018, α=0,05' },
+      { no: 35, jenis: 'SA', deskripsi: 'Interpretasi output regresi: Y=25+3,5X; R²=0,68; p=0,001' },
+      { no: 36, jenis: 'SA', deskripsi: 'Makna interval kepercayaan 95% = [72,5 – 87,5]' },
+      { no: 37, jenis: 'PS', deskripsi: 'Apakah korelasi motivasi–prestasi (r=0,85, p<0,001) menunjukkan kausalitas?' },
+      { no: 38, jenis: 'SA', deskripsi: 'Hubungan antara standar deviasi, standar error, dan interval kepercayaan' },
+      { no: 39, jenis: 'SA', deskripsi: 'Kaitan distribusi normal, Central Limit Theorem, dan uji hipotesis' },
+      { no: 40, jenis: 'SA', deskripsi: 'Keterkaitan ukuran sampel, tingkat kepercayaan, dan lebar interval kepercayaan' },
+    ]
+  },
+  {
+    id: 'ind4', name: 'Kemampuan Transfer', range: '41–50',
+    items: [
+      { no: 41, jenis: 'SA', deskripsi: 'Transfer konteks medis: desain penelitian untuk menguji efektivitas obat baru' },
+      { no: 42, jenis: 'SA', deskripsi: 'Transfer konteks bisnis: prediksi penjualan berdasarkan biaya iklan' },
+      { no: 43, jenis: 'SA', deskripsi: 'Transfer konteks sosial: faktor-faktor partisipasi pemilih' },
+      { no: 44, jenis: 'PS', deskripsi: 'Kelebihan dan kekurangan parametrik vs non-parametrik pada data ordinal Likert' },
+      { no: 45, jenis: 'PS', deskripsi: 'Analisis pengaruh variabel moderator pada hubungan variabel independen–dependen' },
+      { no: 46, jenis: 'PS', deskripsi: "Evaluasi kesimpulan 'hampir signifikan' (p=0,052) dalam penelitian" },
+      { no: 47, jenis: 'PS', deskripsi: 'Perancangan desain penelitian evaluasi program remedial (kepala sekolah)' },
+      { no: 48, jenis: 'PS', deskripsi: 'Langkah evaluasi dampak pelatihan guru terhadap kualitas pembelajaran' },
+      { no: 49, jenis: 'PS', deskripsi: 'Rekomendasi keputusan dari hasil ANOVA F=8,45; p=0,003; post-hoc; η²=0,35' },
+      { no: 50, jenis: 'PS', deskripsi: 'Cara mempresentasikan hasil statistik kepada audiens non-statistik' },
+    ]
+  }
+];
+
+const WAWANCARA_SESSIONS = [
+  { sesi: 'Sesi 2', judul: 'Pengalaman Umum Pembelajaran', items: [
+    { code: 'P-3', text: 'Ceritakan pengalaman Anda dalam mengikuti pembelajaran statistik semester ini!' },
+    { code: 'P-4', text: 'Apa yang Anda rasakan berbeda dibandingkan pembelajaran mata kuliah lain?' },
+    { code: 'P-5', text: 'Bagaimana Anda mengatur waktu belajar dengan format microlearning (modul-modul singkat)?' },
+    { code: 'P-6', text: 'Bagaimana perasaan Anda saat pertama kali menggunakan platform pembelajaran ini?' },
+  ]},
+  { sesi: 'Sesi 3', judul: 'Engagement dan Motivasi', items: [
+    { code: 'P-7', text: 'Apa yang membuat Anda termotivasi untuk terus mengikuti pembelajaran ini?' },
+    { code: 'P-8', text: 'Elemen gamification mana yang paling Anda sukai? Mengapa?' },
+    { code: 'P-9', text: 'Bagaimana sistem poin dan badge mempengaruhi motivasi Anda dalam belajar?' },
+    { code: 'P-10', text: 'Apakah ada saat-saat Anda merasa kurang terlibat atau ingin berhenti? Ceritakan!' },
+    { code: 'P-11', text: 'Apakah persaingan di leaderboard mempengaruhi cara Anda belajar?' },
+  ]},
+  { sesi: 'Sesi 4', judul: 'Proses Pembelajaran dan Pemahaman', items: [
+    { code: 'P-12', text: 'Bagaimana format modul pendek membantu atau menghambat pemahaman Anda terhadap materi statistik?' },
+    { code: 'P-13', text: 'Strategi apa yang Anda gunakan untuk memahami materi statistik dalam format microlearning?' },
+    { code: 'P-14', text: 'Apakah Anda merasa lebih mudah atau lebih sulit memahami statistik dengan pendekatan ini dibandingkan sebelumnya? Jelaskan!' },
+    { code: 'P-15', text: 'Bagaimana feedback instan (langsung) setelah mengerjakan kuis mempengaruhi proses belajar Anda?' },
+    { code: 'P-16', text: 'Apakah Anda merasa materi statistik yang dipelajari benar-benar tersimpan dan dapat diingat dalam jangka panjang?' },
+  ]},
+  { sesi: 'Sesi 5–7', judul: 'Tantangan, Konteks Eksternal & Saran', items: [
+    { code: 'P-17', text: 'Kesulitan apa yang Anda hadapi selama mengikuti pembelajaran ini?' },
+    { code: 'P-18', text: 'Apakah ada hambatan teknis yang mengganggu proses belajar Anda?' },
+    { code: 'P-19', text: 'Bagaimana Anda mengatasi kesulitan dan hambatan tersebut?' },
+    { code: 'P-20', text: 'Apakah format microlearning pernah membuat Anda merasa kehilangan gambaran besar materi statistik?' },
+    { code: 'P-21', text: 'Bagaimana dukungan teman-teman sekelas dalam pembelajaran ini?' },
+    { code: 'P-22', text: 'Apakah akses internet atau perangkat (HP/laptop) menjadi kendala dalam mengikuti pembelajaran?' },
+    { code: 'P-23', text: 'Bagaimana keluarga atau lingkungan tempat tinggal mendukung atau menghambat proses belajar Anda?' },
+    { code: 'P-24', text: 'Apakah jadwal kuliah lain atau kegiatan di luar kampus mempengaruhi partisipasi Anda dalam platform ini?' },
+    { code: 'P-25', text: 'Apa yang menurut Anda perlu diperbaiki dari pendekatan pembelajaran microlearning-gamification ini?' },
+    { code: 'P-26', text: 'Apakah Anda merekomendasikan pendekatan ini untuk mata kuliah lain? Mengapa?' },
+    { code: 'P-27', text: 'Jika Anda bisa mengubah satu hal dari platform atau metode pembelajaran ini, apa yang akan Anda ubah?' },
+  ]},
+];
+
+const FGD_TOPICS = [
+  { sesi: 'Warm-Up', judul: 'Ice Breaking & Pembuka', items: [
+    { code: 'F-1', text: 'Penggambaran pengalaman belajar dengan satu kata (warm-up): "Kalau harus menggambarkan pengalaman belajar statistik semester ini dengan satu kata, apa kata itu? Mengapa?"' },
+    { code: 'F-2', text: 'Momen paling berkesan dalam pembelajaran: "Ceritakan satu momen paling berkesan—baik menyenangkan atau menantang—dalam pembelajaran ini!"' },
+  ]},
+  { sesi: 'Topik 1', judul: 'Pengalaman Microlearning', items: [
+    { code: 'F-3', text: 'Efektivitas format modul pendek vs. pembelajaran konvensional: "Bagaimana pendapat kelompok tentang format pembelajaran dalam modul-modul pendek? Apakah lebih efektif dibanding pembelajaran konvensional?"' },
+    { code: 'F-4', text: 'Fleksibilitas dan aksesibilitas platform terhadap kebiasaan belajar: "Bagaimana fleksibilitas dan aksesibilitas platform ini mempengaruhi kebiasaan belajar kalian?"' },
+    { code: 'F-5', text: 'Potensi kehilangan gambaran besar materi dalam microlearning: "Apakah format modul singkat membuat kalian kehilangan gambaran besar materi statistik? Bagaimana kalian mengatasinya?"' },
+    { code: 'F-6', text: 'Jenis materi yang paling/tidak cocok dengan format microlearning: "Menurut kalian, untuk jenis materi seperti apa format microlearning paling efektif dan paling tidak efektif?"' },
+  ]},
+  { sesi: 'Topik 2', judul: 'Elemen Gamification', items: [
+    { code: 'F-7', text: 'Elemen gamification yang paling berpengaruh terhadap motivasi: "Elemen gamification mana yang paling berpengaruh terhadap motivasi belajar kalian? Mengapa?"' },
+    { code: 'F-8', text: 'Pengaruh poin dan leaderboard terhadap motivasi dan hubungan sosial: "Bagaimana sistem poin dan leaderboard mempengaruhi motivasi dan hubungan sosial di kelas?"' },
+    { code: 'F-9', text: 'Elemen kompetisi vs. kolaborasi dalam gamification: "Apakah elemen kompetisi dalam gamification mendorong atau justru menghambat kolaborasi antar mahasiswa?"' },
+    { code: 'F-10', text: 'Saran penambahan/penghapusan elemen gamification: "Jika kalian bisa menambah atau menghapus satu elemen gamification, apa itu dan mengapa?"' },
+  ]},
+  { sesi: 'Topik 3', judul: 'Engagement, Retensi & Sintesis', items: [
+    { code: 'F-11', text: 'Faktor pendorong dan penghambat keterlibatan aktif: "Apa yang membuat kalian tetap terlibat aktif, atau justru meninggalkan dan menunda-nunda pembelajaran dalam platform ini?"' },
+    { code: 'F-12', text: 'Pengaruh IMGL terhadap kehadiran dan penyelesaian tugas: "Bagaimana pendekatan IMGL ini mempengaruhi kehadiran dan penyelesaian tugas kalian dibandingkan mata kuliah lain?"' },
+    { code: 'F-13', text: 'Retensi materi statistik dengan pendekatan IMGL: "Apakah menurut kalian materi statistik yang dipelajari benar-benar tersimpan lebih baik dengan pendekatan ini?"' },
+    { code: 'F-14', text: 'Perubahan pengalaman belajar dari awal hingga akhir semester: "Bagaimana pengalaman belajar kalian berubah dari awal hingga akhir semester menggunakan platform ini?"' },
+    { code: 'F-15', text: 'Sintesis: tiga hal terpenting yang menentukan keberhasilan/kegagalan IMGL: "Dari seluruh diskusi tadi, apa tiga hal terpenting yang membuat pendekatan IMGL ini berhasil atau gagal menurut kalian?"' },
+    { code: 'F-16', text: 'Rekomendasi konkret untuk penyempurnaan platform/metode: "Apa rekomendasi konkret yang ingin kalian sampaikan kepada dosen atau pengembang platform untuk menyempurnakan pendekatan ini?"' },
+    { code: 'F-17', text: 'Rekomendasi penerapan di mata kuliah lain: "Apakah kalian merekomendasikan pendekatan ini diterapkan di mata kuliah lain? Mata kuliah apa yang paling cocok dan mengapa?"' },
+  ]},
+];
+
+// Rating state storage
+const ratings = {};
+
+// ============================================================
+// INIT
+// ============================================================
+window.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('v_tanggal').value = new Date().toISOString().split('T')[0];
+  buildSLEI();
+  buildSRAI();
+  buildWawancara();
+  buildFGD();
+  updateProgress();
+});
+
+// ============================================================
+// PAGE NAVIGATION
+// ============================================================
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function switchTab(id) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.sidebar-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  document.getElementById('sb-' + id).classList.add('active');
+  if (id === 'summary') buildSummary();
+}
+
+// ============================================================
+// LOGIN
+// ============================================================
+function doLogin() {
+  const fields = ['v_nama','v_nip','v_jabatan','v_pendidikan','v_keahlian','v_instansi','v_email','v_tanggal'];
+  for (const f of fields) {
+    if (!document.getElementById(f).value.trim()) {
+      toast('Mohon lengkapi semua field yang wajib diisi.', 'error');
+      document.getElementById(f).focus();
+      return;
+    }
+  }
+  VALIDATOR.nama = document.getElementById('v_nama').value.trim();
+  VALIDATOR.nip = document.getElementById('v_nip').value.trim();
+  VALIDATOR.jabatan = document.getElementById('v_jabatan').value;
+  VALIDATOR.pendidikan = document.getElementById('v_pendidikan').value;
+  VALIDATOR.keahlian = document.getElementById('v_keahlian').value.trim();
+  VALIDATOR.instansi = document.getElementById('v_instansi').value.trim();
+  VALIDATOR.email = document.getElementById('v_email').value.trim();
+  VALIDATOR.tanggal = document.getElementById('v_tanggal').value;
+
+  document.getElementById('headerValidatorName').textContent = VALIDATOR.nama + ' | ' + VALIDATOR.instansi;
+  document.getElementById('vbarName').textContent = VALIDATOR.nama;
+  document.getElementById('vbarInst').textContent = VALIDATOR.instansi;
+  document.getElementById('vbarDate').textContent = 'Tanggal: ' + new Date(VALIDATOR.tanggal).toLocaleDateString('id-ID', {day:'numeric',month:'long',year:'numeric'});
+
+  showPage('validation');
+  toast('Selamat datang, ' + VALIDATOR.nama + '!', 'success');
+}
+
+// ============================================================
+// BUILD SLEI
+// ============================================================
+function buildSLEI() {
+  // Construct table
+  const tbody = document.getElementById('slei-konstruk-body');
+  const konstrukDims = ['Behavioral Engagement','Emotional Engagement','Cognitive Engagement','Social Engagement'];
+  tbody.innerHTML = konstrukDims.map(dim => `
+    <tr>
+      <td>${dim}</td>
+      ${[4,3,2,1].map(v => `<td>${buildCRBtn('slei_kon_' + dim.replace(/\s/g,'_'), v)}</td>`).join('')}
+      <td><input class="cr-input" type="text" placeholder="Saran..." id="saran_slei_kon_${dim.replace(/\s/g,'_')}" style="min-width:140px"></td>
+    </tr>`).join('');
+
+  // Items by dimension
+  const container = document.getElementById('slei-items-container');
+  const grouped = {};
+  SLEI_ITEMS.forEach(item => {
+    if (!grouped[item.dim]) grouped[item.dim] = {};
+    if (!grouped[item.dim][item.sub]) grouped[item.dim][item.sub] = [];
+    grouped[item.dim][item.sub].push(item);
+  });
+
+  const dimOrder = ['behavioral','emotional','cognitive','social'];
+  const dimNames = { behavioral:'Behavioral Engagement', emotional:'Emotional Engagement', cognitive:'Cognitive Engagement', social:'Social Engagement' };
+  const dimColors = { behavioral:'#0d2340', emotional:'#1e4d8c', cognitive:'#2a7a4b', social:'#c8922a' };
+
+  container.innerHTML = dimOrder.map(dim => {
+    const subs = grouped[dim];
+    const itemCount = SLEI_ITEMS.filter(i => i.dim === dim).length;
+    return `
+    <div class="instrument-section">
+      <div class="section-header" onclick="toggleSection(this)" style="background:linear-gradient(90deg,${dimColors[dim]},${dimColors[dim]}cc)">
+        <h3>Dimensi: ${dimNames[dim]}</h3>
+        <div style="display:flex;align-items:center;gap:12px">
+          <span class="sh-meta">${itemCount} item</span>
+          <span class="section-chevron">▾</span>
+        </div>
+      </div>
+      <div class="section-body">
+        ${Object.entries(subs).map(([sub, items]) => `
+          <div style="padding:10px 24px 4px;background:var(--gray-100);border-bottom:1px solid var(--gray-200)">
+            <small style="font-weight:700;color:var(--gray-400);letter-spacing:1px;text-transform:uppercase;font-size:11px">Sub-Dimensi: ${sub}</small>
+          </div>
+          ${items.map(item => buildSLEIItem(item)).join('')}
+        `).join('')}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function buildSLEIItem(item) {
+  const key = 'slei_' + item.no;
+  return `
+  <div class="item-row" id="row_${key}">
+    <div class="item-num">${item.no}</div>
+    <div class="item-content">
+      <div class="item-text">${item.text}</div>
+      <div class="rating-grid">
+        ${buildRatingRow(key, 'rel', 'Relevansi')}
+        ${buildRatingRow(key, 'jls', 'Kejelasan')}
+        ${buildRatingRow(key, 'bhs', 'Ketepatan Bahasa')}
+        ${buildRatingRow(key, 'ctx', 'Kesesuaian Konteks')}
+      </div>
+      <div class="item-saran">
+        <textarea class="saran-input" id="${key}_saran" placeholder="Saran perbaikan (opsional)..." rows="2"></textarea>
+      </div>
+      <div class="decision-row">
+        <span style="font-size:11px;color:var(--gray-400);margin-right:4px">Keputusan:</span>
+        <button class="decision-btn dr" onclick="setDecision('${key}','DR',this)">✓ DR</button>
+        <button class="decision-btn r" onclick="setDecision('${key}','R',this)">⚠ R</button>
+        <button class="decision-btn t" onclick="setDecision('${key}','T',this)">✗ T</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ============================================================
+// BUILD SRAI
+// ============================================================
+function buildSRAI() {
+  const container = document.getElementById('srai-items-container');
+  container.innerHTML = SRAI_INDICATORS.map(ind => `
+    <div class="instrument-section">
+      <div class="section-header" onclick="toggleSection(this)">
+        <h3>Indikator ${ind.id.replace('ind','')} – ${ind.name}</h3>
+        <div style="display:flex;align-items:center;gap:12px">
+          <span class="sh-meta">Soal ${ind.range} · ${ind.items.length} item</span>
+          <span class="section-chevron">▾</span>
+        </div>
+      </div>
+      <div class="section-body">
+        ${ind.items.map(item => `
+          <div class="item-row" id="row_srai_${item.no}">
+            <div class="item-num">${item.no}</div>
+            <div class="item-content">
+              <span class="item-type-badge ${item.jenis==='MC'?'badge-mc':item.jenis==='SA'?'badge-sa':'badge-ps'}">${item.jenis}</span>
+              <div class="item-text">${item.deskripsi}</div>
+              <div class="rating-grid">
+                ${buildRatingRow('srai_'+item.no, 'vi', 'Validitas Isi')}
+                ${buildRatingRow('srai_'+item.no, 'vk', 'Validitas Konstruk')}
+                ${buildRatingRow('srai_'+item.no, 'bhs', 'Bahasa')}
+                ${buildRatingRow('srai_'+item.no, 'ctx', 'Konteks')}
+              </div>
+              <div class="item-saran">
+                <textarea class="saran-input" id="srai_${item.no}_saran" placeholder="Komentar / saran perbaikan..." rows="2"></textarea>
+              </div>
+            </div>
+          </div>`).join('')}
+      </div>
+    </div>`).join('');
+}
+
+// ============================================================
+// BUILD WAWANCARA
+// ============================================================
+function buildWawancara() {
+  const container = document.getElementById('wawancara-items-container');
+  container.innerHTML = WAWANCARA_SESSIONS.map(sess => `
+    <div class="instrument-section">
+      <div class="section-header" onclick="toggleSection(this)">
+        <h3>${sess.sesi}: ${sess.judul}</h3>
+        <div style="display:flex;align-items:center;gap:12px">
+          <span class="sh-meta">${sess.items.length} pertanyaan</span>
+          <span class="section-chevron">▾</span>
+        </div>
+      </div>
+      <div class="section-body">
+        ${sess.items.map(item => `
+          <div class="item-row" id="row_w_${item.code.replace('-','')}">
+            <div class="item-num" style="font-size:9px;width:32px;height:32px">${item.code}</div>
+            <div class="item-content">
+              <div class="item-text">${item.text}</div>
+              <div class="rating-grid">
+                ${buildRatingRow('w_'+item.code.replace('-',''), 'rel', 'Relevansi')}
+                ${buildRatingRow('w_'+item.code.replace('-',''), 'jls', 'Kejelasan')}
+                ${buildRatingRow('w_'+item.code.replace('-',''), 'rep', 'Keterwakilan')}
+                ${buildRatingRow('w_'+item.code.replace('-',''), 'bhs', 'Bahasa')}
+              </div>
+              <div class="item-saran">
+                <textarea class="saran-input" id="w_${item.code.replace('-','')}_saran" placeholder="Saran perbaikan..." rows="2"></textarea>
+              </div>
+            </div>
+          </div>`).join('')}
+      </div>
+    </div>`).join('');
+}
+
+// ============================================================
+// BUILD FGD
+// ============================================================
+function buildFGD() {
+  const container = document.getElementById('fgd-items-container');
+  container.innerHTML = FGD_TOPICS.map(topic => `
+    <div class="instrument-section">
+      <div class="section-header" onclick="toggleSection(this)">
+        <h3>${topic.sesi}: ${topic.judul}</h3>
+        <div style="display:flex;align-items:center;gap:12px">
+          <span class="sh-meta">${topic.items.length} pertanyaan</span>
+          <span class="section-chevron">▾</span>
+        </div>
+      </div>
+      <div class="section-body">
+        ${topic.items.map(item => `
+          <div class="item-row" id="row_f_${item.code.replace('-','')}">
+            <div class="item-num" style="font-size:9px;width:32px;height:32px">${item.code}</div>
+            <div class="item-content">
+              <div class="item-text">${item.text}</div>
+              <div class="rating-grid">
+                ${buildRatingRow('f_'+item.code.replace('-',''), 'rel', 'Relevansi')}
+                ${buildRatingRow('f_'+item.code.replace('-',''), 'jls', 'Kejelasan')}
+                ${buildRatingRow('f_'+item.code.replace('-',''), 'rep', 'Keterwakilan')}
+                ${buildRatingRow('f_'+item.code.replace('-',''), 'bhs', 'Bahasa')}
+              </div>
+              <div class="item-saran">
+                <textarea class="saran-input" id="f_${item.code.replace('-','')}_saran" placeholder="Saran perbaikan..." rows="2"></textarea>
+              </div>
+            </div>
+          </div>`).join('')}
+      </div>
+    </div>`).join('');
+}
+
+// ============================================================
+// RATING HELPERS
+// ============================================================
+function buildRatingRow(key, aspect, label) {
+  return `
+  <div class="rating-row">
+    <div class="rating-label">${label}</div>
+    <div class="stars" id="stars_${key}_${aspect}">
+      ${[1,2,3,4].map(v => `<div class="star" onclick="setRating('${key}','${aspect}',${v},this)" title="Skor ${v}">${v}</div>`).join('')}
+    </div>
+  </div>`;
+}
+
+function buildCRBtn(key, val) {
+  return `<div class="cr-btn" onclick="setCRRating('${key}',${val},this)">${val}</div>`;
+}
+
+function setRating(key, aspect, val, el) {
+  const starsEl = document.getElementById('stars_' + key + '_' + aspect);
+  if (!starsEl) return;
+  starsEl.querySelectorAll('.star').forEach((s, i) => s.classList.toggle('selected', i < val));
+  if (!ratings[key]) ratings[key] = {};
+  ratings[key][aspect] = val;
+  updateProgress();
+}
+
+function setCRRating(key, val, el) {
+  const parent = el.parentElement;
+  parent.querySelectorAll('.cr-btn').forEach(b => b.classList.remove('sel'));
+  el.classList.add('sel');
+  if (!ratings[key]) ratings[key] = {};
+  ratings[key]['val'] = val;
+}
+
+function setDecision(key, decision, btn) {
+  const row = document.getElementById('row_' + key);
+  if (!row) return;
+  row.querySelectorAll('.decision-btn').forEach(b => b.classList.remove('sel'));
+  btn.classList.add('sel');
+  if (!ratings[key]) ratings[key] = {};
+  ratings[key]['decision'] = decision;
+}
+
+// ============================================================
+// PROGRESS
+// ============================================================
+function updateProgress() {
+  const totalItems = SLEI_ITEMS.length + SRAI_INDICATORS.reduce((s,i)=>s+i.items.length,0) +
+    WAWANCARA_SESSIONS.reduce((s,i)=>s+i.items.length,0) + FGD_TOPICS.reduce((s,i)=>s+i.items.length,0);
+  let rated = 0;
+  for (const key in ratings) {
+    if (ratings[key] && Object.keys(ratings[key]).length > 0) rated++;
+  }
+  const pct = Math.min(100, Math.round(rated / totalItems * 100));
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('progressCount').textContent = rated + ' / ' + totalItems + ' item dinilai';
+}
+
+// ============================================================
+// TOGGLE SECTION
+// ============================================================
+function toggleSection(header) {
+  const body = header.nextElementSibling;
+  const chevron = header.querySelector('.section-chevron');
+  body.classList.toggle('collapsed');
+  chevron.textContent = body.classList.contains('collapsed') ? '▸' : '▾';
+}
+
+// ============================================================
+// SUMMARY
+// ============================================================
+function buildSummary() {
+  // Calculate averages
+  const calcAvg = (keys) => {
+    let total = 0, count = 0;
+    keys.forEach(k => {
+      const r = ratings[k];
+      if (r) {
+        ['rel','jls','bhs','ctx','vi','vk','rep'].forEach(a => {
+          if (r[a]) { total += r[a]; count++; }
+        });
+      }
+    });
+    return count > 0 ? (total / count).toFixed(2) : '-';
+  };
+
+  const sleiKeys = SLEI_ITEMS.map(i => 'slei_' + i.no);
+  const sraiKeys = SRAI_INDICATORS.flatMap(ind => ind.items.map(i => 'srai_' + i.no));
+  const wKeys = WAWANCARA_SESSIONS.flatMap(s => s.items.map(i => 'w_' + i.code.replace('-','')));
+  const fKeys = FGD_TOPICS.flatMap(t => t.items.map(i => 'f_' + i.code.replace('-','')));
+
+  const sleiAvg = calcAvg(sleiKeys);
+  const sraiAvg = calcAvg(sraiKeys);
+  const wAvg = calcAvg(wKeys);
+  const fAvg = calcAvg(fKeys);
+
+  const toCVI = avg => avg !== '-' ? Math.min(1, (parseFloat(avg) - 1) / 3).toFixed(3) : '-';
+
+  const el = document.getElementById('summaryStats');
+  el.innerHTML = `
+    <div class="summary-stat-grid">
+      <div class="sstat"><div class="sstat-val">${sleiAvg}</div><div class="sstat-label">Rata-rata SLEI</div></div>
+      <div class="sstat"><div class="sstat-val">${sraiAvg}</div><div class="sstat-label">Rata-rata SRAI</div></div>
+      <div class="sstat"><div class="sstat-val">${wAvg}</div><div class="sstat-label">Rata-rata Wawancara</div></div>
+      <div class="sstat"><div class="sstat-val">${fAvg}</div><div class="sstat-label">Rata-rata FGD</div></div>
+    </div>
+    <div style="margin-top:8px">
+      ${[['SLEI (40 item)', sleiAvg, toCVI(sleiAvg)],
+         ['SRAI (50 soal)', sraiAvg, toCVI(sraiAvg)],
+         ['Wawancara (27 pertanyaan)', wAvg, toCVI(wAvg)],
+         ['FGD (17 pertanyaan)', fAvg, toCVI(fAvg)]
+        ].map(([label, avg, cvi]) => `
+        <div style="margin-bottom:14px">
+          <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px">
+            <span style="font-weight:600">${label}</span>
+            <span>Skor rata-rata: <strong>${avg}</strong> | CVI: <strong>${cvi}</strong></span>
+          </div>
+          <div class="cvi-bar">
+            <div class="cvi-fill" style="width:${cvi !== '-' ? Math.round(parseFloat(cvi)*100) : 0}%"></div>
+          </div>
+        </div>`).join('')}
+    </div>`;
+}
+
+// ============================================================
+// COLLECT ALL DATA
+// ============================================================
+function collectAllData() {
+  const conclusion = document.querySelector('input[name="conclusion"]:checked');
+  return {
+    timestamp: new Date().toISOString(),
+    validator: VALIDATOR,
+    ratings: ratings,
+    sleiSarans: Object.fromEntries(SLEI_ITEMS.map(i => [i.no, document.getElementById('slei_'+i.no+'_saran')?.value || ''])),
+    sraiSarans: Object.fromEntries(SRAI_INDICATORS.flatMap(ind => ind.items.map(i => [i.no, document.getElementById('srai_'+i.no+'_saran')?.value || '']))),
+    conclusion: {
+      verdict: conclusion ? conclusion.value : '',
+      komentar: document.getElementById('concl_komentar')?.value || '',
+      saran: document.getElementById('concl_saran')?.value || '',
+      tambah: document.getElementById('concl_tambah')?.value || '',
+    }
+  };
+}
+
+// ============================================================
+// GOOGLE SHEETS
+// ============================================================
+const SHEET_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbwwB8XNu2yDKqgCtKTxQK633lklAwb7ZUX65QoQKg5xbq64Z3B6cjekh0L6hYTAQcVs/exec'; // GANTI dengan URL deployment
+
+async function saveToSheets() {
+  if (!VALIDATOR.nama) { toast('Silakan login terlebih dahulu', 'error'); return; }
+  showLoading('Menyimpan ke Google Sheets...');
+  try {
+    const data = collectAllData();
+    const flatData = flattenForSheets(data);
+    const response = await fetch(SHEET_WEBAPP_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(flatData)
+    });
+    hideLoading();
+    toast('Data berhasil dikirim ke Google Sheets!', 'success');
+  } catch (err) {
+    hideLoading();
+    toast('Pastikan URL Google Apps Script sudah dikonfigurasi. Data dapat diekspor via PDF.', 'info');
+    console.warn('Sheets error:', err);
+  }
+}
+
+function flattenForSheets(data) {
+  const row = {
+    timestamp: data.timestamp,
+    nama: data.validator.nama,
+    nip: data.validator.nip,
+    jabatan: data.validator.jabatan,
+    pendidikan: data.validator.pendidikan,
+    keahlian: data.validator.keahlian,
+    instansi: data.validator.instansi,
+    email: data.validator.email,
+    tanggal: data.validator.tanggal,
+    verdict: data.conclusion.verdict,
+    komentar: data.conclusion.komentar,
+    saran: data.conclusion.saran,
+  };
+  SLEI_ITEMS.forEach(item => {
+    const r = data.ratings['slei_' + item.no] || {};
+    row['slei_' + item.no + '_rel'] = r.rel || '';
+    row['slei_' + item.no + '_jls'] = r.jls || '';
+    row['slei_' + item.no + '_bhs'] = r.bhs || '';
+    row['slei_' + item.no + '_ctx'] = r.ctx || '';
+    row['slei_' + item.no + '_dec'] = r.decision || '';
+    row['slei_' + item.no + '_saran'] = data.sleiSarans[item.no] || '';
+  });
+  return row;
+}
+
+// ============================================================
+// PDF EXPORT
+// ============================================================
+function exportPDF() {
+  if (!VALIDATOR.nama) { toast('Silakan login terlebih dahulu', 'error'); return; }
+  showLoading('Membuat PDF...');
+  setTimeout(() => {
+    try {
+      generatePDF();
+      hideLoading();
+      toast('PDF berhasil diunduh!', 'success');
+    } catch(e) {
+      hideLoading();
+      toast('Gagal membuat PDF: ' + e.message, 'error');
+      console.error(e);
+    }
+  }, 100);
+}
+
+function generatePreview() {
+  switchTab('summary');
+  buildSummary();
+  toast('Silakan klik "Ekspor PDF" untuk mengunduh.', 'info');
+}
+
+function generatePDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+  const W = doc.internal.pageSize.getWidth();
+  const H = doc.internal.pageSize.getHeight();
+  let y = 0;
+
+  const addPage = () => { doc.addPage(); y = 20; };
+  const checkY = (needed = 10) => { if (y + needed > H - 20) addPage(); };
+
+  // Color palette
+  const navy = [13, 35, 64];
+  const gold = [200, 146, 42];
+  const white = [255, 255, 255];
+  const lightGray = [245, 245, 240];
+  const gray = [100, 95, 88];
+
+  // --- COVER PAGE ---
+  doc.setFillColor(...navy);
+  doc.rect(0, 0, W, H, 'F');
+
+  doc.setFillColor(...gold);
+  doc.rect(0, H - 30, W, 30, 'F');
+
+  doc.setTextColor(...white);
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(9);
+  doc.text('UNIVERSITAS JAMBI · UNIVERSITAS MERANGIN', W/2, 30, { align: 'center' });
+
+  doc.setFontSize(22);
+  doc.text('LEMBAR VALIDASI AHLI', W/2, 70, { align: 'center' });
+  doc.setFontSize(16);
+  doc.text('EXPERT JUDGEMENT', W/2, 85, { align: 'center' });
+
+  doc.setFillColor(...gold);
+  doc.rect(20, 95, W-40, 1, 'F');
+
+  doc.setFontSize(12);
+  doc.setTextColor(...gold);
+  doc.text('Instrumen Penelitian Model IMGL', W/2, 110, { align: 'center' });
+  doc.setTextColor(...white);
+  doc.text('Statistical Learning Engagement Instrument (SLEI)', W/2, 125, { align: 'center' });
+  doc.text('Statistical Retention Assessment Instrument (SRAI)', W/2, 135, { align: 'center' });
+  doc.text('Wawancara Semi-Terstruktur & Focus Group Discussion', W/2, 145, { align: 'center' });
+
+  doc.setFillColor(...gold);
+  doc.rect(20, 155, W-40, 1, 'F');
+
+  doc.setFontSize(11);
+  doc.setTextColor(200, 200, 200);
+  const vlines = [
+    `Nama Validator : ${VALIDATOR.nama}`,
+    `NIP/NIDN       : ${VALIDATOR.nip}`,
+    `Jabatan         : ${VALIDATOR.jabatan} – ${VALIDATOR.pendidikan}`,
+    `Bidang Keahlian: ${VALIDATOR.keahlian}`,
+    `Institusi       : ${VALIDATOR.instansi}`,
+    `Email           : ${VALIDATOR.email}`,
+    `Tanggal Validasi: ${VALIDATOR.tanggal}`,
+  ];
+  vlines.forEach((line, i) => doc.text(line, 30, 170 + i * 10));
+
+  doc.setTextColor(...navy);
+  doc.setFontSize(9);
+  doc.text('Muhammad Jainuri (P3A524007) · Doktor Pendidikan MIPA · Universitas Jambi · 2026', W/2, H - 12, { align: 'center' });
+
+  // --- SLEI SECTION ---
+  addPage();
+  const sectionHeader = (title, subtitle) => {
+    doc.setFillColor(...navy);
+    doc.rect(0, y-6, W, 18, 'F');
+    doc.setTextColor(...white);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(13);
+    doc.text(title, 15, y+4);
+    doc.setFontSize(9);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(200, 200, 180);
+    doc.text(subtitle, 15, y+10);
+    y += 20;
+  };
+
+  const itemRow = (no, text, keyPrefix) => {
+    checkY(50);
+    const r = ratings[keyPrefix + '_' + no] || {};
+    doc.setFillColor(...lightGray);
+    doc.rect(10, y, W-20, 8, 'F');
+    doc.setTextColor(...navy);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(9);
+    doc.text(`Item ${no}`, 13, y+5.5);
+    y += 9;
+
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(8);
+    doc.setTextColor(...gray);
+    const lines = doc.splitTextToSize(text, W-30);
+    lines.forEach(line => { checkY(6); doc.text(line, 13, y+4); y += 5; });
+
+    const aspects = keyPrefix === 'slei'
+      ? [['Relevansi', r.rel], ['Kejelasan', r.jls], ['Bahasa', r.bhs], ['Konteks', r.ctx], ['Keputusan', r.decision]]
+      : [['V. Isi', r.vi||r.rel], ['V. Konstruk', r.vk||r.jls], ['Bahasa', r.bhs], ['Konteks', r.ctx||r.rep]];
+
+    checkY(10);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(7.5);
+    const colW = (W-20) / aspects.length;
+    aspects.forEach((([label, val], idx) => {
+      const x = 10 + idx * colW;
+      doc.setFillColor(val ? ...navy : [220,220,215]);
+      doc.roundedRect(x+1, y, colW-3, 7, 1, 1, 'F');
+      doc.setTextColor(val ? ...white : ...gray);
+      doc.text(`${label}: ${val || '–'}`, x + colW/2, y+4.5, { align: 'center' });
+    }));
+    y += 9;
+
+    const sEl = document.getElementById(keyPrefix + '_' + no + '_saran');
+    if (sEl && sEl.value.trim()) {
+      checkY(8);
+      doc.setFont('helvetica', 'italic');
+      doc.setFontSize(7);
+      doc.setTextColor(150, 100, 30);
+      doc.text('Saran: ' + sEl.value.trim(), 13, y+3);
+      y += 6;
+    }
+    y += 3;
+  };
+
+  sectionHeader('📊 SLEI – Statistical Learning Engagement Instrument', '40 item · 4 Dimensi Engagement');
+  SLEI_ITEMS.forEach(item => itemRow(item.no, item.text, 'slei'));
+
+  // SRAI
+  addPage();
+  sectionHeader('🎯 SRAI – Statistical Retention Assessment Instrument', '50 soal · 4 Indikator Retensi');
+  SRAI_INDICATORS.forEach(ind => {
+    checkY(12);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(10);
+    doc.setTextColor(...navy);
+    doc.text('Indikator: ' + ind.name, 12, y+4);
+    y += 9;
+    ind.items.forEach(item => itemRow(item.no, `[${item.jenis}] ${item.deskripsi}`, 'srai'));
+  });
+
+  // Wawancara
+  addPage();
+  sectionHeader('🗣️ Instrumen Wawancara Semi-Terstruktur', '27 pertanyaan · 8 sesi');
+  WAWANCARA_SESSIONS.forEach(sess => {
+    checkY(12);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(10);
+    doc.setTextColor(...navy);
+    doc.text(sess.sesi + ': ' + sess.judul, 12, y+4);
+    y += 9;
+    sess.items.forEach(item => {
+      const rk = 'w_' + item.code.replace('-','');
+      itemRow(item.code, item.text, 'w');
+    });
+  });
+
+  // FGD
+  addPage();
+  sectionHeader('👥 Instrumen Focus Group Discussion (FGD)', '17 pertanyaan · 5 tahap');
+  FGD_TOPICS.forEach(topic => {
+    checkY(12);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(10);
+    doc.setTextColor(...navy);
+    doc.text(topic.sesi + ': ' + topic.judul, 12, y+4);
+    y += 9;
+    topic.items.forEach(item => {
+      itemRow(item.code, item.text, 'f');
+    });
+  });
+
+  // Conclusion
+  addPage();
+  sectionHeader('✅ Kesimpulan & Rekomendasi Validator', '');
+  const conclusion = document.querySelector('input[name="conclusion"]:checked');
+  checkY(16);
+  doc.setFillColor(...gold);
+  doc.rect(10, y, W-20, 10, 'F');
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(10);
+  doc.setTextColor(...navy);
+  doc.text('Keputusan: ' + (conclusion ? conclusion.value : 'Belum dipilih'), 15, y+7);
+  y += 14;
+
+  const concFields = [
+    ['Komentar Umum', document.getElementById('concl_komentar')?.value],
+    ['Saran Perbaikan', document.getElementById('concl_saran')?.value],
+    ['Item yang Ditambahkan', document.getElementById('concl_tambah')?.value],
+  ];
+  concFields.forEach(([label, val]) => {
+    if (!val) return;
+    checkY(20);
+    doc.setFont('helvetica', 'bold'); doc.setFontSize(9); doc.setTextColor(...navy);
+    doc.text(label + ':', 12, y+4); y += 8;
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(8); doc.setTextColor(...gray);
+    const lines = doc.splitTextToSize(val, W-30);
+    lines.forEach(line => { checkY(6); doc.text(line, 14, y+3); y += 5; });
+    y += 4;
+  });
+
+  // Signature
+  checkY(40);
+  y += 10;
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(9);
+  doc.setTextColor(...gray);
+  const city = VALIDATOR.instansi.split(' ')[0] || 'Bangko';
+  doc.text('Demikian lembar validasi ini saya isi dengan sebenar-benarnya.', 15, y); y += 10;
+  doc.text(city + ', ' + VALIDATOR.tanggal, W - 60, y); y += 20;
+  doc.setFont('helvetica', 'bold');
+  doc.text(VALIDATOR.nama, W - 60, y); y += 6;
+  doc.setFont('helvetica', 'normal');
+  doc.text('NIP/NIDN: ' + VALIDATOR.nip, W - 60, y);
+
+  // Add footer to all pages
+  const totalPages = doc.internal.getNumberOfPages();
+  for (let i = 1; i <= totalPages; i++) {
+    doc.setPage(i);
+    doc.setFillColor(...navy);
+    doc.rect(0, H-10, W, 10, 'F');
+    doc.setTextColor(...white);
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(7);
+    doc.text('Expert Judgement Instrumen IMGL · Muhammad Jainuri · Universitas Jambi 2026', W/2, H-4, { align: 'center' });
+    doc.text(`Halaman ${i} dari ${totalPages}`, W-15, H-4, { align: 'right' });
+  }
+
+  doc.save(`Expert_Judgement_IMGL_${VALIDATOR.nama.replace(/\s+/g,'_')}_${VALIDATOR.tanggal}.pdf`);
+}
+
+// ============================================================
+// UI UTILITIES
+// ============================================================
+function showLoading(msg) {
+  document.getElementById('loadingText').textContent = msg || 'Memproses...';
+  document.getElementById('loadingOverlay').classList.remove('hidden');
+}
+function hideLoading() {
+  document.getElementById('loadingOverlay').classList.add('hidden');
+}
+
+function toast(msg, type = 'info') {
+  const wrap = document.getElementById('toastWrap');
+  const t = document.createElement('div');
+  t.className = 'toast ' + type;
+  const icons = { success: '✅', error: '❌', info: '💡' };
+  t.innerHTML = `<span>${icons[type] || '📌'}</span><span>${msg}</span>`;
+  wrap.appendChild(t);
+  setTimeout(() => { t.style.opacity='0'; t.style.transform='translateX(100%)'; t.style.transition='all 0.3s'; setTimeout(() => t.remove(), 300); }, 4000);
+}
+</script>
+</body>
+</html>
